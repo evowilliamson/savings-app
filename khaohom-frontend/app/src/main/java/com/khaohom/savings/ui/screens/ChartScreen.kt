@@ -19,8 +19,8 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.khaohom.savings.ui.viewmodel.SavingsViewModel
-import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import com.khaohom.savings.utils.DateUtils
 
 @Composable
 fun ChartScreen(
@@ -77,7 +77,7 @@ fun ChartScreen(
                                     val index = value.toInt()
                                     return if (index >= 0 && index < chartData.size) {
                                         try {
-                                            val date = LocalDate.parse(chartData[index].date)
+                                            val date = DateUtils.parseDate(chartData[index].date)
                                             date.format(DateTimeFormatter.ofPattern("MMM yy"))
                                         } catch (e: Exception) {
                                             ""

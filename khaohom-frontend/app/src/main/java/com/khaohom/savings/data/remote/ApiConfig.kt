@@ -6,8 +6,8 @@ package com.khaohom.savings.data.remote
  * IMPORTANT: Update BASE_URL with your Railway backend URL before building the app
  */
 object ApiConfig {
-    // TODO: Replace with your actual Railway backend URL
-    const val BASE_URL = "https://your-backend-xyz.railway.app/"
+    // Railway backend URL
+    const val BASE_URL = "https://savings-app-production.up.railway.app/"
     
     // External API endpoints
     const val COINGECKO_BASE_URL = "https://api.coingecko.com/api/v3/"

@@ -83,39 +83,49 @@ class SavingsViewModel : ViewModel() {
                 
                 // Fetch assets
                 val assetsResult = repository.getAssets()
-                if (assetsResult.isSuccess) {
-                    _assets.value = assetsResult.getOrNull() ?: emptyList()
+                if (assetsResult.isFailure) {
+                    _uiState.value = UiState.Error(assetsResult.exceptionOrNull()?.message ?: "Failed to load assets")
+                    return@launch
                 }
+                _assets.value = assetsResult.getOrNull() ?: emptyList()
                 
                 // Fetch transactions
                 val transactionsResult = repository.getTransactions()
-                if (transactionsResult.isSuccess) {
-                    _transactions.value = transactionsResult.getOrNull() ?: emptyList()
+                if (transactionsResult.isFailure) {
+                    _uiState.value = UiState.Error(transactionsResult.exceptionOrNull()?.message ?: "Failed to load transactions")
+                    return@launch
                 }
+                _transactions.value = transactionsResult.getOrNull() ?: emptyList()
                 
                 // Calculate holdings
                 val holdingsResult = repository.getAssetHoldings(
                     _exchangeRate.value,
                     _currentPrices.value
                 )
-                if (holdingsResult.isSuccess) {
-                    _holdings.value = holdingsResult.getOrNull() ?: emptyList()
+                if (holdingsResult.isFailure) {
+                    _uiState.value = UiState.Error(holdingsResult.exceptionOrNull()?.message ?: "Failed to calculate holdings")
+                    return@launch
                 }
+                _holdings.value = holdingsResult.getOrNull() ?: emptyList()
                 
                 // Calculate summary
                 val summaryResult = repository.getPortfolioSummary(
                     _exchangeRate.value,
                     _currentPrices.value
                 )
-                if (summaryResult.isSuccess) {
-                    _summary.value = summaryResult.getOrNull()
+                if (summaryResult.isFailure) {
+                    _uiState.value = UiState.Error(summaryResult.exceptionOrNull()?.message ?: "Failed to calculate summary")
+                    return@launch
                 }
+                _summary.value = summaryResult.getOrNull()
                 
                 // Get chart data
                 val chartResult = repository.getChartData(_exchangeRate.value)
-                if (chartResult.isSuccess) {
-                    _chartData.value = chartResult.getOrNull() ?: emptyList()
+                if (chartResult.isFailure) {
+                    _uiState.value = UiState.Error(chartResult.exceptionOrNull()?.message ?: "Failed to load chart data")
+                    return@launch
                 }
+                _chartData.value = chartResult.getOrNull() ?: emptyList()
                 
                 // Get projections
                 updateProjections()

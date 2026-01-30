@@ -5,8 +5,8 @@ import com.khaohom.savings.data.remote.RetrofitClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import com.khaohom.savings.utils.DateUtils
 
 /**
  * Main repository for data operations
@@ -154,7 +154,7 @@ class SavingsRepository {
         
         val firstDate = transactions.minByOrNull { it.transactionDate }?.transactionDate ?: return 0.0
         val today = LocalDate.now()
-        val firstDateParsed = LocalDate.parse(firstDate)
+        val firstDateParsed = DateUtils.parseDate(firstDate)
         
         val daysBetween = ChronoUnit.DAYS.between(firstDateParsed, today)
         if (daysBetween <= 0) return 0.0

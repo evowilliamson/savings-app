@@ -46,7 +46,7 @@ fun MainScreen(viewModel: SavingsViewModel = viewModel()) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("🎁 Khaohom's Savings") },
+                title = { Text("Khaohom's Savings") },
                 actions = {
                     // Currency toggle
                     IconButton(

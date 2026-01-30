@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.sp
 import com.khaohom.savings.data.model.AssetHolding
 import com.khaohom.savings.data.model.PortfolioSummary
 import com.khaohom.savings.ui.viewmodel.SavingsViewModel
+import com.khaohom.savings.ui.viewmodel.UiState
 
 @Composable
 fun AssetsScreen(
@@ -25,6 +26,7 @@ fun AssetsScreen(
     val summary by viewModel.summary.collectAsState()
     val isThb by viewModel.isThb.collectAsState()
     val lastUpdated by viewModel.lastUpdated.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
     
     Column(
         modifier = modifier
@@ -39,7 +41,33 @@ fun AssetsScreen(
             modifier = Modifier.padding(bottom = 12.dp)
         )
         
-        if (holdings.isEmpty()) {
+        if (uiState is UiState.Error) {
+            val message = (uiState as UiState.Error).message
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = "Failed to load assets",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = message,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Button(onClick = { viewModel.loadData() }) {
+                        Text("Retry")
+                    }
+                }
+            }
+        } else if (holdings.isEmpty()) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

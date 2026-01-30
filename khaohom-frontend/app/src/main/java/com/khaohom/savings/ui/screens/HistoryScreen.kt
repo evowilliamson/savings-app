@@ -12,8 +12,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.khaohom.savings.data.model.Transaction
 import com.khaohom.savings.ui.viewmodel.SavingsViewModel
-import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import com.khaohom.savings.utils.DateUtils
 
 @Composable
 fun HistoryScreen(
@@ -139,7 +139,7 @@ fun TransactionRow(
         // Date
         Text(
             text = try {
-                LocalDate.parse(transaction.transactionDate)
+                DateUtils.parseDate(transaction.transactionDate)
                     .format(DateTimeFormatter.ofPattern("MMM dd, yy"))
             } catch (e: Exception) {
                 transaction.transactionDate
