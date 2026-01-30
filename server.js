@@ -7,6 +7,8 @@ import rateLimit from 'express-rate-limit';
 dotenv.config();
 
 const app = express();
+// Trust Railway/hosting proxy for correct client IPs
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 
 // Database connection
@@ -77,7 +79,7 @@ app.get('/api/payments', getLimiter, async (req, res) => {
         st.amount,
         a.asset_name,
         a.display_name as asset_display_name,
-        st.thb_price,
+        st.price,
         st.usd_value_at_tx,
         st.usd_cumulative,
         st.reason,
@@ -183,7 +185,7 @@ app.post('/api/sync-payments', postLimiter, async (req, res) => {
             transaction_date, 
             amount, 
             asset_id, 
-            thb_price, 
+            price, 
             usd_value_at_tx, 
             usd_cumulative, 
             reason, 
@@ -192,7 +194,7 @@ app.post('/api/sync-payments', postLimiter, async (req, res) => {
           ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
           ON CONFLICT (transaction_date, amount, asset_id, usd_value_at_tx) 
           DO UPDATE SET
-            thb_price = EXCLUDED.thb_price,
+            price = EXCLUDED.price,
             usd_cumulative = EXCLUDED.usd_cumulative,
             reason = EXCLUDED.reason,
             status = EXCLUDED.status,
@@ -205,7 +207,7 @@ app.post('/api/sync-payments', postLimiter, async (req, res) => {
           payment.date,
           payment.amount,
           assetId,
-          payment.thb_price || null,
+          payment.price || null,
           payment.usd_value,
           payment.usd_cum,
           payment.reason || null,

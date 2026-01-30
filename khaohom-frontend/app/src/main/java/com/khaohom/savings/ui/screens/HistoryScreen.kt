@@ -198,8 +198,8 @@ fun TransactionDetailDialog(
                 DetailRow("Asset", transaction.assetDisplayName)
                 DetailRow("Amount", viewModel.formatAmount(transaction.amount, transaction.assetName))
                 
-                transaction.thbPrice?.let {
-                    DetailRow("THB Price", viewModel.formatCurrency(it, true))
+                transaction.price?.let {
+                    DetailRow("Price", viewModel.formatCurrency(it, true))
                 }
                 
                 DetailRow(

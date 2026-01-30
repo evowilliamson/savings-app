@@ -154,7 +154,7 @@ CREATE TABLE savings_transactions (
     transaction_date    DATE NOT NULL,
     amount              NUMERIC NOT NULL,
     asset_id            INTEGER NOT NULL REFERENCES assets(id),
-    thb_price           NUMERIC,
+    price               NUMERIC,
     usd_value_at_tx     NUMERIC NOT NULL,
     usd_cumulative      NUMERIC NOT NULL,
     reason              TEXT,

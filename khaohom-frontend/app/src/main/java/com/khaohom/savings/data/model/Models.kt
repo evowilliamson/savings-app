@@ -21,7 +21,7 @@ data class Transaction(
     @SerializedName("amount") val amount: Double,
     @SerializedName("asset_name") val assetName: String,
     @SerializedName("asset_display_name") val assetDisplayName: String,
-    @SerializedName("thb_price") val thbPrice: Double?,
+    @SerializedName("price") val price: Double?,
     @SerializedName("usd_value_at_tx") val usdValueAtTx: Double,
     @SerializedName("usd_cumulative") val usdCumulative: Double,
     @SerializedName("reason") val reason: String?,

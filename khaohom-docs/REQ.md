@@ -73,7 +73,7 @@ CREATE TABLE savings_transactions (
     transaction_date    DATE NOT NULL,
     amount              NUMERIC NOT NULL,
     asset_id            INTEGER NOT NULL REFERENCES assets(id),
-    thb_price           NUMERIC,                        -- Price in THB at time of purchase (for BTC)
+    price               NUMERIC,                        -- Asset price at time of purchase (for BTC)
     usd_value_at_tx     NUMERIC NOT NULL,               -- USD column from sheet
     usd_cumulative      NUMERIC NOT NULL,               -- USD Cum. column from sheet
     reason              TEXT,                           -- Birthday, Monthly savings, etc.
@@ -99,7 +99,7 @@ CREATE INDEX idx_savings_asset ON savings_transactions (asset_id);
 ### Endpoints:
 
 #### POST /api/sync-payments
-- **Body:** `{ "password": "...", "payments": [ {date, amount, thb_price, usd_value, usd_cum, asset, reason, status, usdthb_rate}, ... ] }`
+- **Body:** `{ "password": "...", "payments": [ {date, amount, price, usd_value, usd_cum, asset, reason, status, usdthb_rate}, ... ] }`
 - **Auth:** Password from Google Sheet cell H1 must match `SYNC_PASSWORD` environment variable in Railway
 - **Logic:** 
   - Verify password matches env variable (401 if mismatch)
@@ -122,7 +122,7 @@ CREATE INDEX idx_savings_asset ON savings_transactions (asset_id);
     "amount": 0.5,
     "asset_name": "GOLD",
     "asset_display_name": "Gold",
-    "thb_price": null,
+    "price": null,
     "usd_value_at_tx": 1315,
     "usd_cumulative": 1315,
     "reason": "Birthday",

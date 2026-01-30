@@ -121,7 +121,7 @@ function syncPayments() {
       const payment = {
         date: formatDate(row[CONFIG.COLUMNS.DATE]),
         amount: parseFloat(row[CONFIG.COLUMNS.AMOUNT]) || 0,
-        thb_price: parseFloat(row[CONFIG.COLUMNS.THB_PRICE]) || null,
+        price: parseFloat(row[CONFIG.COLUMNS.THB_PRICE]) || null,
         usd_value: parseFloat(row[CONFIG.COLUMNS.USD]) || 0,
         usd_cum: parseFloat(row[CONFIG.COLUMNS.USD_CUM]) || 0,
         asset: String(row[CONFIG.COLUMNS.ASSET]).trim().toUpperCase(),
