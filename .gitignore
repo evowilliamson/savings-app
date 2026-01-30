@@ -8,6 +8,9 @@ node_modules/
 *.log
 npm-debug.log*
 
+# Android build outputs
+khaohom-frontend/app/build/
+
 # OS files
 .DS_Store
 Thumbs.db
